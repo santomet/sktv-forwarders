@@ -1,47 +1,21 @@
-name: Upload code to santovic-test
+name: 🚀 Deploy
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
+
 jobs:
-  FTP-Upload:
-    # You may pin to the exact commit or the version.
-    # uses: modern-dev/ftp-mirror@700ec6b399f45cbd58572085856c6fe2114c8342
-    uses: modern-dev/ftp-mirror@v2
-    with:
-      # FTP Server.
-      server: delfinek.endora.cz
-      # FTP User.
-      user: santovicdeploy
-      # FTP Password.
-      password: ${{ secrets.FTPPASS }}
-      # Local directory.
-      local_dir: # optional, default is ./
-      # Remote directory.
-      remote_dir: # optional, default is ./
-      # Delete all the files inside of the remote directory.
-      delete: # optional, default is false
-      # Exclude matching files.
-      exclude: # optional, default is 
-      # Exclude matching files
-      exclude_glob: # optional, default is 
-      # Times that the lftp will be executed if an error occurred.
-      max_retries: # optional, default is 10
-      # Do not create symbolic links.
-      no_symlinks: # optional, default is true
-      # FTP - Allow SSL encryption.
-      ftp_ssl_allow: # optional, default is false
-      # FTP - FEAT: Determining what extended features the FTP server supports.
-      ftp_use_feat: # optional, default is false
-      # FTP - Delay in seconds between NOOP commands when downloading tail of a file.
-      ftp_nop_interval: # optional, default is 2
-      # NET - Maximum number of operation without success. 0 unlimited. 1 no retries.
-      net_max_retries: # optional, default is 1
-      # NET - Ignore hard errors. When reply 5xx errors or there is too many users.
-      net_persist_retries: # optional, default is 5
-      # NET - Sets the network protocol timeout.
-      net_timeout: # optional, default is 15s
-      # DNS - 0 no limit trying to lookup an address otherwise try only this number of times.
-      dns_max_retries: # optional, default is 8
-      # DNS - Time for DNS queries. Set to "never" to disable.
-      dns_fatal_timeout: # optional, default is 10s
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Here is the deployment action
+      - name: Upload from output to a remote server via FTP
+        uses: modern-dev/ftp-mirror@v2
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          #local_dir: "./output"
+          #remote_dir: "./http"
+          delete: "false"
+          #exlude: "data/ cache/"
