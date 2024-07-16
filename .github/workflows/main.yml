@@ -8,7 +8,7 @@ jobs:
     # You may pin to the exact commit or the version.
     # uses: modern-dev/ftp-mirror@700ec6b399f45cbd58572085856c6fe2114c8342
     uses: modern-dev/ftp-mirror@v2
-      with:
+    with:
       # FTP Server.
       server: delfinek.endora.cz
       # FTP User.
@@ -45,4 +45,3 @@ jobs:
       dns_max_retries: # optional, default is 8
       # DNS - Time for DNS queries. Set to "never" to disable.
       dns_fatal_timeout: # optional, default is 10s
-          
