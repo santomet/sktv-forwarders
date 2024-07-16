@@ -56,7 +56,7 @@ foreach($channels as $i) {
         ?>
         <tr>
             <td><?php echo htmlspecialchars($j["name"]); ?></td>
-            <td><a href="/get.php?x=<?php echo $j["id"]; ?>"><?php echo htmlspecialchars($j["id"]); ?></a></td>
+            <td><a href="get.php?x=<?php echo $j["id"]; ?>"><?php echo htmlspecialchars($j["id"]); ?></a></td>
             <td><a href="<?php echo $j["streamURL"]; ?>"><?php 
     echo htmlspecialchars(strlen($j["streamURL"]) > 40 ? (substr($j["streamURL"], 0, 37) . "...") : $j["streamURL"]);
 ?></a></td>
@@ -68,5 +68,6 @@ foreach($channels as $i) {
 <?php
     echo $i["note"];
 }
-?>    <p>&copy; <?php echo date("Y"); ?> <a href="//home.nezbednik.eu.org:2000/">nezbednik</a></p>
+?>    <p>&copy; <?php echo date("Y"); ?> Created originally by <a href="https://github.com/NezbednikSK">nezbednik</a>, now maintained by <a href="?>    <p>&copy; <?php echo date("Y"); ?> Created originally by <a href="//home.nezbednik.eu.org:2000/">nezbednik</a>, now maintained by <a href="//home.nezbednik.eu.org:2000/">santomet</a></p>
+">santomet</a></p>
 </html>
