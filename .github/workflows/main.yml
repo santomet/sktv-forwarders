@@ -18,4 +18,4 @@ jobs:
           #local_dir: "./output"
           #remote_dir: "./http"
           delete: "false"
-          exlude: ".git/ .github/ video_unavailable/"
+          exclude: ".git/ .github/ video_unavailable/"
