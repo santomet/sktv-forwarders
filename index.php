@@ -41,7 +41,7 @@ include "channels.inc.php";
     <div class="i pagetitle">
         <h1 class="i purple">sk</h1><h1 class="i blue">tv</h1><h1 class="i">&nbsp;forwarders</h1>
     </div>
-    <p>licensed under AGPL-3.0-or-later, <a href="source.php">source available</a></p>
+    <p>licensed under AGPL-3.0-or-later, <a href="https://github.com/santomet/sktv-forwarders">source available</a></p>
 <?php
 foreach($channels as $i) {
     ?>    <h1 class="title"><?php echo htmlspecialchars($i["name"]); ?></h1>
