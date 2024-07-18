@@ -4,18 +4,39 @@ function loc($x) {
     die();
 }
 
+//without proxy
+// function stv_url($x) {
+//     return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+// }
+
 function stv_url($x) {
-    return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+    $playlisturl = json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+    $postdata = http_build_query(
+        array(
+                'url' => $playlisturl
+        )
+        );
+    $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            ));
+
+    $context = stream_context_create($opts);
+    $playlist = file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
+    $lines = explode("\n", $playlist);
+    return $lines[5]; //1080p is on line 4
 }
 
 /*
-// bez proxy
+// without proxy
 function nova_url($x) {
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", file_get_contents("https://media.cms.nova.cz/embed/nova" . $x . "live?autoplay=1"))[1])[0]));
 }
 */
 
-// nefunguje
+// not working?
 function nova_url($x, $tn = false) {
     $content = file_get_contents("https://proxy.zelvar.cz/subdom/proxy/index.php?q=https%3A%2F%2Fmedia" . ($tn ? "tn" : "") . ".cms.nova.cz%2Fembed%2F" . $x . ($tn ? "" : "live") . "%3Fautoplay%3D1&hl=200", false, stream_context_create(array("ssl"=>array("verify_peer_name"=>false))));
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", $content)[1])[0]));
