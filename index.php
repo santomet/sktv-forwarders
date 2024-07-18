@@ -68,6 +68,5 @@ foreach($channels as $i) {
 <?php
     echo $i["note"];
 }
-?>    <p>&copy; <?php echo date("Y"); ?> Created originally by <a href="https://github.com/NezbednikSK">nezbednik</a>, now maintained by <a href="?>    <p>&copy; <?php echo date("Y"); ?> Created originally by <a href="//home.nezbednik.eu.org:2000/">nezbednik</a>, now maintained by <a href="//home.nezbednik.eu.org:2000/">santomet</a></p>
-">santomet</a></p>
+?>    <p>&copy; <?php echo date("Y"); ?> Created originally by <a href="https://github.com/NezbednikSK">nezbednik</a>, now maintained by <a href="https://santomet.eu">santomet</a></p>
 </html>
