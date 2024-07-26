@@ -9,6 +9,7 @@ function loc($x) {
 //     return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
 // }
 
+//stv with proxy
 function stv_url($x) {
     $playlisturl = json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
     $postdata = http_build_query(
@@ -28,15 +29,35 @@ function stv_url($x) {
     $lines = explode("\n", $playlist);
     return $lines[5]; //1080p is on line 4
 }
+ 
+//Markiza with proxy
+function markiza_url() {
+    $siteurl = "https://media.cms.markiza.sk/embed/markiza-live?autoplay=any";
+    $postdata = http_build_query(
+        array(
+                'url' => $siteurl
+        )
+        );
+    $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            ));
+
+    $context = stream_context_create($opts);
+    $sitecontent = file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
+    $streamurl = join("", explode("\\", explode("\"", explode("[{\"src\":\"", $sitecontent)[1])[0]));
+    return $streamurl;
+}
 
 /*
-// without proxy
+// NOVA without proxy, only works if server is in Czech
 function nova_url($x) {
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", file_get_contents("https://media.cms.nova.cz/embed/nova" . $x . "live?autoplay=1"))[1])[0]));
 }
 */
 
-// not working?
 function nova_url($x, $tn = false) {
     $content = file_get_contents("https://proxy.zelvar.cz/subdom/proxy/index.php?q=https%3A%2F%2Fmedia" . ($tn ? "tn" : "") . ".cms.nova.cz%2Fembed%2F" . $x . ($tn ? "" : "live") . "%3Fautoplay%3D1&hl=200", false, stream_context_create(array("ssl"=>array("verify_peer_name"=>false))));
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", $content)[1])[0]));
@@ -188,6 +209,9 @@ else if ($channel == "NR_SR") {
 }
 else if ($channel == "SPORT") {
     loc(stv_url("15"));
+}
+else if ($channel == "Markiza") {
+    loc(markiza_url());
 }
 else if ($channel == "Nova") {
     loc(nova_url("nova-"));

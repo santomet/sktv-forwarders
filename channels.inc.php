@@ -19,8 +19,18 @@ add_channel($chan_sk, ":O", "STV-O", "https://www.rtvs.sk/televizia/live-o");
 add_channel($chan_sk, "RTVS", "RTVS", "https://www.rtvs.sk/televizia/live-rtvs");
 add_channel($chan_sk, "NR SR", "NR_SR", "https://www.rtvs.sk/televizia/live-nr-sr");
 add_channel($chan_sk, "TA3", "TA3", "https://www.ta3.com/live");
+add_channel($chan_sk, "Markiza", "Markiza", "https://media.cms.markiza.sk/embed/markiza-live?autoplay=any");
 
-add_country($channels, "Slovakia", "sk", $chan_sk);
+$slovakiaNote = array (
+    "    <br>",
+    "    <details>",
+    "        <summary>note: Markiza needs the Referer to be https://media.cms.markiza.sk/ !</summary>",
+    "        <pre style=\"background-color: gainsboro;\">vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
+    "    </details>",
+    ""
+);
+
+add_country($channels, "Slovakia", "sk", $chan_sk, implode("\n", $slovakiaNote));
 
 // Czech Republic
 $chan_cz = array();
@@ -43,9 +53,7 @@ $czechNote = array(
     "    <br>",
     "    <details>",
     "        <summary>note: all Nova channels (excluding TN Live) need the Referer to be <a href=\"https://media.cms.nova.cz\" style=\"text-decoration: none;\">https://media.cms.nova.cz</a>!</summary>",
-    "        <pre style=\"background-color: gainsboro;\">#EXTINF:-1,Nova",
-    "#EXTVLCOPT:http-referrer=https://media.cms.nova.cz",
-    "https://sktv-forwarders.7m.pl/get.php?x=Nova</pre>",
+    "        <pre style=\"background-color: gainsboro;\">vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
     "    </details>",
     ""
 );
