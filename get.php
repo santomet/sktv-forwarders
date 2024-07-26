@@ -31,8 +31,8 @@ function stv_url($x) {
 }
  
 //Markiza with proxy
-function markiza_url() {
-    $siteurl = "https://media.cms.markiza.sk/embed/markiza-live?autoplay=any";
+function markiza_url($x) {
+    $siteurl = "https://media.cms.markiza.sk/embed/" . $x . "-live?autoplay=any";
     $postdata = http_build_query(
         array(
                 'url' => $siteurl
@@ -211,7 +211,19 @@ else if ($channel == "SPORT") {
     loc(stv_url("15"));
 }
 else if ($channel == "Markiza") {
-    loc(markiza_url());
+    loc(markiza_url("markiza"));
+}
+else if ($channel == "Doma") {
+    loc(markiza_url("doma"));
+}
+else if ($channel == "Dajto") {
+    loc(markiza_url("dajto"));
+}
+else if ($channel == "Krimi") {
+    loc(markiza_url("krimi"));
+}
+else if ($channel == "Klasik") {
+    loc(markiza_url("klasik"));
 }
 else if ($channel == "Nova") {
     loc(nova_url("nova-"));

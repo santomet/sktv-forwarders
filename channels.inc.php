@@ -20,11 +20,15 @@ add_channel($chan_sk, "RTVS", "RTVS", "https://www.rtvs.sk/televizia/live-rtvs")
 add_channel($chan_sk, "NR SR", "NR_SR", "https://www.rtvs.sk/televizia/live-nr-sr");
 add_channel($chan_sk, "TA3", "TA3", "https://www.ta3.com/live");
 add_channel($chan_sk, "Markiza", "Markiza", "https://media.cms.markiza.sk/embed/markiza-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Dajto", "Dajto", "https://media.cms.markiza.sk/embed/dajto-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Doma", "Doma", "https://media.cms.markiza.sk/embed/doma-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Krimi", "Krimi", "https://media.cms.markiza.sk/embed/krimi-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Klasik", "Klasik", "https://media.cms.markiza.sk/embed/klasik-live?autoplay=any");
 
 $slovakiaNote = array (
     "    <br>",
     "    <details>",
-    "        <summary>note: Markiza needs the Referer to be https://media.cms.markiza.sk/ !</summary>",
+    "        <summary>note: All markiza channels need the Referer to be https://media.cms.markiza.sk/ !</summary>",
     "        <pre style=\"background-color: gainsboro;\">vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
     "    </details>",
     ""
