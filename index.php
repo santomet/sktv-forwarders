@@ -19,7 +19,7 @@
             <h1 class="text-blue-600">tv</h1>
             <h1>forwarders revival</h1>
         </div>
-        <p class="text-center mb-8">licensed under AGPL-3.0-or-later, <a href="source.php" class="text-blue-500 underline">source available</a></p>
+        <p class="text-center mb-8">licensed under AGPL-3.0-or-later, <a href="https://github.com/santomet/sktv-forwarders" class="text-blue-500 underline">source available</a></p>
         <?php
         include "channels.inc.php";
         foreach($channels as $i) {
@@ -56,6 +56,7 @@
         }
         ?>
         <p class="text-center mt-8">&copy; <?php echo date("Y"); ?> Created originally by <a href="https://github.com/NezbednikSK" class="text-blue-500 underline">nezbednik</a>, now maintained by <a href="https://santomet.eu">santomet</a> (And redesigned by <a href="https://odjezdy.online" class="text-blue-500 underline">mxnticek</a> using <a href="https://screenshottocode.com/" class="text-blue-500 underline bold">Screenshot To Code</a>)</p>
+        <p class="text-center mt-8"> Disclaimer: This project is an open-source initiative provided for educational purposes only. The software and scripts contained herein are intended to be used exclusively by individuals who have legitimate access to the resources, such as by completing any required registrations or residing in regions where access is permitted by the content provider </p>
     </div>
 </body>
 </html>
