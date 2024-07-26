@@ -113,8 +113,3 @@ add_channel($chan_cl, "13 Teleseries", "13Teleseries", "https://www.13.cl/13t");
 */
 
 add_country($channels, "Chile", "cl", $chan_cl);
-
-$chan_nl = array();
-add_channel($chan_nl, "GO-TV [off-site]", "GO_TV", "https://www.go-rtv.nl/televisie");
-
-add_country($channels, "Netherlands", "nl", $chan_nl);

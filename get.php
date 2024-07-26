@@ -332,9 +332,6 @@ else if ($channel == "Chilevision") {
 else if ($channel == "Canal13") {
     loc(canal13("bFL1IVq9RNGlWQaqgiFuNw"));
 }
-else if ($channel == "GO_TV") {
-    loc("https://gortv-m3u.7m.pl/grab.php");
-}
 else {
     header("Status: 404");
     header("Content-Type: text/plain");
