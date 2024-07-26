@@ -17,9 +17,9 @@
         <div class="flex items-center justify-center space-x-2 text-4xl font-bold mb-8">
             <h1 class="text-purple-600">sk</h1>
             <h1 class="text-blue-600">tv</h1>
-            <h1>forwarders</h1>
+            <h1>forwarders revival</h1>
         </div>
-        <p class="text-center mb-8">licensed under AGPL-3.0-or-later, <a href="https://github.com/santomet/sktv-forwarders" class="text-blue-500 underline">source available</a></p>
+        <p class="text-center mb-8">licensed under AGPL-3.0-or-later, <a href="source.php" class="text-blue-500 underline">source available</a></p>
         <?php
         include "channels.inc.php";
         foreach($channels as $i) {
