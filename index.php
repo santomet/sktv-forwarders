@@ -41,7 +41,7 @@
                         ?>
                         <tr>
                             <td class="px-4 py-2 border-b"><?php echo htmlspecialchars($j["name"]); ?></td>
-                            <td class="px-4 py-2 border-b"><a href="/iptv/get.php?x=<?php echo $j["id"]; ?>" class="text-blue-500 underline"><?php echo htmlspecialchars($j["id"]); ?></a></td>
+                            <td class="px-4 py-2 border-b"><a href="get.php?x=<?php echo $j["id"]; ?>" class="text-blue-500 underline"><?php echo htmlspecialchars($j["id"]); ?></a></td>
                             <td class="px-4 py-2 border-b"><a href="<?php echo $j["streamURL"]; ?>" class="text-blue-500 underline"><?php echo htmlspecialchars(strlen($j["streamURL"]) > 40 ? (substr($j["streamURL"], 0, 37) . "...") : $j["streamURL"]); ?></a></td>
                         </tr>
                         <?php
