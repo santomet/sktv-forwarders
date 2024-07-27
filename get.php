@@ -4,6 +4,12 @@ function loc($x) {
     die();
 }
 
+function m3u8_refer($url, $referer) {
+    header('Content-type: application/x-mpegURL');
+    echo "#EXTVLCOPT:http-referrer=" . $referer . "\n" . "#EXTVLCOPT:adaptive-use-access" . "\n" . $url;
+    die();
+}
+
 //without proxy
 // function stv_url($x) {
 //     return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
@@ -211,37 +217,37 @@ else if ($channel == "SPORT") {
     loc(stv_url("15"));
 }
 else if ($channel == "Markiza") {
-    loc(markiza_url("markiza"));
+    m3u8_refer(markiza_url("markiza"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Doma") {
-    loc(markiza_url("doma"));
+    m3u8_refer(markiza_url("doma"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Dajto") {
-    loc(markiza_url("dajto"));
+    m3u8_refer(markiza_url("dajto"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Krimi") {
-    loc(markiza_url("krimi"));
+    m3u8_refer(markiza_url("krimi"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Klasik") {
-    loc(markiza_url("klasik"));
+    m3u8_refer(markiza_url("klasik"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Nova") {
-    loc(nova_url("nova-"));
+    m3u8_refer(nova_url("nova-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaFun") {
-    loc(nova_url("nova-2-"));
+    m3u8_refer(nova_url("nova-2-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaLady") {
-    loc(nova_url("nova-lady-"));
+    m3u8_refer(nova_url("nova-lady-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaGold") {
-    loc(nova_url("nova-gold-"));
+    m3u8_refer(nova_url("nova-gold-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaCinema") {
-    loc(nova_url("nova-cinema-"));
+    m3u8_refer(nova_url("nova-cinema-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaAction") {
-    loc(nova_url("nova-action-"));
+    m3u8_refer(nova_url("nova-action-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaTNLive") {
     loc(nova_url("ETpdC5paJa8", true));

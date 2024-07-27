@@ -28,8 +28,10 @@ add_channel($chan_sk, "(Markiza) Klasik", "Klasik", "https://media.cms.markiza.s
 $slovakiaNote = array (
     "    <br>",
     "    <details>",
-    "        <summary>note: All markiza channels need the Referer to be https://media.cms.markiza.sk/ !</summary>",
-    "        <pre style=\"background-color: gainsboro;\">vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
+    "        <summary>note: All Markiza channels need the Referer to be https://media.cms.markiza.sk/ !</summary>",
+    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in current VLC. Use explicit command for your favourite player:",
+    "vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
+    "mpv --http-header-fields=\"Referer: https://media.cms.markiza.sk/\" [URL]",
     "    </details>",
     ""
 );
@@ -56,10 +58,11 @@ add_channel($chan_cz, "TN Live", "NovaTNLive", "https://tn.nova.cz/tnlive");
 $czechNote = array(
     "    <br>",
     "    <details>",
-    "        <summary>note: all Nova channels (excluding TN Live) need the Referer to be <a href=\"https://media.cms.nova.cz\" style=\"text-decoration: none;\">https://media.cms.nova.cz</a>!</summary>",
-    "        <pre style=\"background-color: gainsboro;\">vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
+    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ !</summary>",
+    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in current VLC. Use explicit command for your favourite player:",
+    "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
+    "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
     "    </details>",
-    ""
 );
 
 add_country($channels, "Czech Republic", "cz", $chan_cz, implode("\n", $czechNote));
