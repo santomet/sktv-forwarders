@@ -339,8 +339,6 @@ else if ($channel == "Canal13") {
     loc(canal13("bFL1IVq9RNGlWQaqgiFuNw"));
 }
 else {
-    header("Status: 404");
-    header("Content-Type: text/plain");
-    echo "404 Not Found\n";
+    loc("video_unavailable/unavailable.m3u8");
 }
 ?>
