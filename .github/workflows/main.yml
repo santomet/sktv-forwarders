@@ -16,6 +16,6 @@ jobs:
           user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           #local_dir: "./output"
-          #remote_dir: "./http"
+          remote_dir: ${{ secrets.FTP_REMOTEDIR }}
           delete: "false"
           exclude: ".git/ .github/ video_unavailable/generate_videos.sh video_unavailable/unavailable.psd video_unavailable/unavailable.png"
