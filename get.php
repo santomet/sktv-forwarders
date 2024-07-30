@@ -4,11 +4,18 @@ function loc($x) {
     die();
 }
 
+function m3u8_refer($url, $referer) {
+    header('Content-type: application/x-mpegURL');
+    echo "#EXTVLCOPT:http-referrer=" . $referer . "\n" . "#EXTVLCOPT:adaptive-use-access" . "\n" . $url;
+    die();
+}
+
 //without proxy
 // function stv_url($x) {
 //     return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
 // }
 
+//stv with proxy
 function stv_url($x) {
     $playlisturl = json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
     $postdata = http_build_query(
@@ -28,15 +35,35 @@ function stv_url($x) {
     $lines = explode("\n", $playlist);
     return $lines[5]; //1080p is on line 4
 }
+ 
+//Markiza with proxy
+function markiza_url($x) {
+    $siteurl = "https://media.cms.markiza.sk/embed/" . $x . "-live?autoplay=any";
+    $postdata = http_build_query(
+        array(
+                'url' => $siteurl
+        )
+        );
+    $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            ));
+
+    $context = stream_context_create($opts);
+    $sitecontent = file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
+    $streamurl = join("", explode("\\", explode("\"", explode("[{\"src\":\"", $sitecontent)[1])[0]));
+    return $streamurl;
+}
 
 /*
-// without proxy
+// NOVA without proxy, only works if server is in Czech
 function nova_url($x) {
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", file_get_contents("https://media.cms.nova.cz/embed/nova" . $x . "live?autoplay=1"))[1])[0]));
 }
 */
 
-// not working?
 function nova_url($x, $tn = false) {
     $content = file_get_contents("https://proxy.zelvar.cz/subdom/proxy/index.php?q=https%3A%2F%2Fmedia" . ($tn ? "tn" : "") . ".cms.nova.cz%2Fembed%2F" . $x . ($tn ? "" : "live") . "%3Fautoplay%3D1&hl=200", false, stream_context_create(array("ssl"=>array("verify_peer_name"=>false))));
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", $content)[1])[0]));
@@ -189,23 +216,38 @@ else if ($channel == "NR_SR") {
 else if ($channel == "SPORT") {
     loc(stv_url("15"));
 }
+else if ($channel == "Markiza") {
+    m3u8_refer(markiza_url("markiza"), "https://media.cms.markiza.sk/");
+}
+else if ($channel == "Doma") {
+    m3u8_refer(markiza_url("doma"), "https://media.cms.markiza.sk/");
+}
+else if ($channel == "Dajto") {
+    m3u8_refer(markiza_url("dajto"), "https://media.cms.markiza.sk/");
+}
+else if ($channel == "Krimi") {
+    m3u8_refer(markiza_url("krimi"), "https://media.cms.markiza.sk/");
+}
+else if ($channel == "Klasik") {
+    m3u8_refer(markiza_url("klasik"), "https://media.cms.markiza.sk/");
+}
 else if ($channel == "Nova") {
-    loc(nova_url("nova-"));
+    m3u8_refer(nova_url("nova-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaFun") {
-    loc(nova_url("nova-2-"));
+    m3u8_refer(nova_url("nova-2-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaLady") {
-    loc(nova_url("nova-lady-"));
+    m3u8_refer(nova_url("nova-lady-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaGold") {
-    loc(nova_url("nova-gold-"));
+    m3u8_refer(nova_url("nova-gold-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaCinema") {
-    loc(nova_url("nova-cinema-"));
+    m3u8_refer(nova_url("nova-cinema-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaAction") {
-    loc(nova_url("nova-action-"));
+    m3u8_refer(nova_url("nova-action-"), "https://media.cms.nova.cz/");
 }
 else if ($channel == "NovaTNLive") {
     loc(nova_url("ETpdC5paJa8", true));
@@ -296,12 +338,7 @@ else if ($channel == "Chilevision") {
 else if ($channel == "Canal13") {
     loc(canal13("bFL1IVq9RNGlWQaqgiFuNw"));
 }
-else if ($channel == "GO_TV") {
-    loc("https://gortv-m3u.7m.pl/grab.php");
-}
 else {
-    header("Status: 404");
-    header("Content-Type: text/plain");
-    echo "404 Not Found\n";
+    loc("video_unavailable/unavailable.m3u8");
 }
 ?>

@@ -19,8 +19,24 @@ add_channel($chan_sk, ":O", "STV-O", "https://www.rtvs.sk/televizia/live-o");
 add_channel($chan_sk, "RTVS", "RTVS", "https://www.rtvs.sk/televizia/live-rtvs");
 add_channel($chan_sk, "NR SR", "NR_SR", "https://www.rtvs.sk/televizia/live-nr-sr");
 add_channel($chan_sk, "TA3", "TA3", "https://www.ta3.com/live");
+add_channel($chan_sk, "Markiza", "Markiza", "https://media.cms.markiza.sk/embed/markiza-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Dajto", "Dajto", "https://media.cms.markiza.sk/embed/dajto-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Doma", "Doma", "https://media.cms.markiza.sk/embed/doma-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Krimi", "Krimi", "https://media.cms.markiza.sk/embed/krimi-live?autoplay=any");
+add_channel($chan_sk, "(Markiza) Klasik", "Klasik", "https://media.cms.markiza.sk/embed/klasik-live?autoplay=any");
 
-add_country($channels, "Slovakia", "sk", $chan_sk);
+$slovakiaNote = array (
+    "    <br>",
+    "    <details>",
+    "        <summary>note: All Markiza channels need the Referer to be https://media.cms.markiza.sk/ !</summary>",
+    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in current VLC. Use explicit command for your favourite player:",
+    "vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
+    "mpv --http-header-fields=\"Referer: https://media.cms.markiza.sk/\" [URL]",
+    "    </details>",
+    ""
+);
+
+add_country($channels, "Slovakia", "sk", $chan_sk, implode("\n", $slovakiaNote));
 
 // Czech Republic
 $chan_cz = array();
@@ -42,12 +58,11 @@ add_channel($chan_cz, "TN Live", "NovaTNLive", "https://tn.nova.cz/tnlive");
 $czechNote = array(
     "    <br>",
     "    <details>",
-    "        <summary>note: all Nova channels (excluding TN Live) need the Referer to be <a href=\"https://media.cms.nova.cz\" style=\"text-decoration: none;\">https://media.cms.nova.cz</a>!</summary>",
-    "        <pre style=\"background-color: gainsboro;\">#EXTINF:-1,Nova",
-    "#EXTVLCOPT:http-referrer=https://media.cms.nova.cz",
-    "https://sktv-forwarders.7m.pl/get.php?x=Nova</pre>",
+    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ !</summary>",
+    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in current VLC. Use explicit command for your favourite player:",
+    "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
+    "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
     "    </details>",
-    ""
 );
 
 add_country($channels, "Czech Republic", "cz", $chan_cz, implode("\n", $czechNote));
@@ -101,8 +116,3 @@ add_channel($chan_cl, "13 Teleseries", "13Teleseries", "https://www.13.cl/13t");
 */
 
 add_country($channels, "Chile", "cl", $chan_cl);
-
-$chan_nl = array();
-add_channel($chan_nl, "GO-TV [off-site]", "GO_TV", "https://www.go-rtv.nl/televisie");
-
-add_country($channels, "Netherlands", "nl", $chan_nl);
