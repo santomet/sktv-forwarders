@@ -19,25 +19,3 @@ jobs:
           remote_dir: ${{ secrets.FTP_REMOTEDIR }}
           delete: "false"
           exclude: ".git/ .github/ video_unavailable/generate_videos.sh video_unavailable/unavailable.psd video_unavailable/unavailable.png"
-
-name: 🚀 Deploy Dev
-on:
-  push:
-    branches: [ dev ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      # Here is the deployment action
-      - name: Upload from output to a remote server via FTP
-        uses: modern-dev/ftp-mirror@v2
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          user: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          #local_dir: "./output"
-          remote_dir: ${{ secrets.FTP_REMOTEDIR_DEV }}
-          delete: "false"
-          exclude: ".git/ .github/ video_unavailable/generate_videos.sh video_unavailable/unavailable.psd video_unavailable/unavailable.png"
