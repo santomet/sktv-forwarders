@@ -5,7 +5,7 @@ function loc($x) {
 }
 
 function notfound($x) {
-    header("HTTP/1.1 301 Moved Permanently");
+    header($_SERVER['SERVER_PROTOCOL']." 301 Moved Permanently", true );
     header("Location: " . $x);
     die();
 }
