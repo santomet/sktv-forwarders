@@ -4,6 +4,12 @@ function loc($x) {
     die();
 }
 
+function notfound($x) {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: " . $x);
+    die();
+}
+
 function m3u8_refer($url, $referer) {
     header('Content-type: application/x-mpegURL');
     echo "#EXTVLCOPT:http-referrer=" . $referer . "\n" . "#EXTVLCOPT:adaptive-use-access" . "\n" . $url;
@@ -209,6 +215,6 @@ else if ($channel == "CTsportPlus") {
     ceskatelevize(28);
 }
 else {
-    loc("video_unavailable/unavailable.m3u8");
+    notfound("video_unavailable/unavailable.m3u8");
 }
 ?>
