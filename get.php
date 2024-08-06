@@ -16,17 +16,13 @@ function m3u8_refer($url, $referer) {
     die();
 }
 
-//without proxy
-// function stv_url($x) {
-//     return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
-// }
 
-//stv with proxy
-function stv_url($x) {
-    $playlisturl = json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+// Proxy functions
+
+function proxyserversk($url) {
     $postdata = http_build_query(
         array(
-                'url' => $playlisturl
+                'url' => $url
         )
         );
     $opts = array('http' =>
@@ -37,28 +33,32 @@ function stv_url($x) {
             ));
 
     $context = stream_context_create($opts);
-    $playlist = file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
+    return file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
+}
+
+function proxydopici($url) {
+    return file_get_contents("https://dopi.ci/scripts/sktv-proxy.php?q=" . urlencode($url));
+}
+
+// RTVS ---------------
+
+//without proxy
+function stv_url($x) {
+    return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+}
+
+//stv with proxy
+function stv_url_proxy($x) {
+    $playlisturl = json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+    $playlist = proxydopici($playlisturl);
     $lines = explode("\n", $playlist);
     return $lines[5]; //1080p is on line 4
 }
  
 //Markiza with proxy
-function markiza_url($x) {
+function markiza_url_proxy($x) {
     $siteurl = "https://media.cms.markiza.sk/embed/" . $x . "-live?autoplay=any";
-    $postdata = http_build_query(
-        array(
-                'url' => $siteurl
-        )
-        );
-    $opts = array('http' =>
-            array(
-                'method' => 'POST',
-                'header' => 'Content-Type: application/x-www-form-urlencoded',
-                'content' => $postdata
-            ));
-
-    $context = stream_context_create($opts);
-    $sitecontent = file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
+    $sitecontent = proxydopici($siteurl);
     $streamurl = join("", explode("\\", explode("\"", explode("[{\"src\":\"", $sitecontent)[1])[0]));
     return $streamurl;
 }
@@ -134,40 +134,40 @@ if ($channel == "TA3") {
     loc(ta3_url());
 }
 else if ($channel == "STV1") {
-    loc(stv_url("1"));
+    loc(stv_url_proxy("1"));
 }
 else if ($channel == "STV2") {
-    loc(stv_url("2"));
+    loc(stv_url_proxy("2"));
 }
 else if ($channel == "STV24") {
-    loc(stv_url("3"));
+    loc(stv_url_proxy("3"));
 }
 else if ($channel == "STV-O") {
-    loc(stv_url("4"));
+    loc(stv_url_proxy("4"));
 }
 else if ($channel == "RTVS") {
-    loc(stv_url("6"));
+    loc(stv_url_proxy("6"));
 }
 else if ($channel == "NR_SR") {
-    loc(stv_url("5"));
+    loc(stv_url_proxy("5"));
 }
 else if ($channel == "SPORT") {
-    loc(stv_url("15"));
+    loc(stv_url_proxy("15"));
 }
 else if ($channel == "Markiza") {
-    m3u8_refer(markiza_url("markiza"), "https://media.cms.markiza.sk/");
+    m3u8_refer(markiza_url_proxy("markiza"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Doma") {
-    m3u8_refer(markiza_url("doma"), "https://media.cms.markiza.sk/");
+    m3u8_refer(markiza_url_proxy("doma"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Dajto") {
-    m3u8_refer(markiza_url("dajto"), "https://media.cms.markiza.sk/");
+    m3u8_refer(markiza_url_proxy("dajto"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Krimi") {
-    m3u8_refer(markiza_url("krimi"), "https://media.cms.markiza.sk/");
+    m3u8_refer(markiza_url_proxy("krimi"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Klasik") {
-    m3u8_refer(markiza_url("klasik"), "https://media.cms.markiza.sk/");
+    m3u8_refer(markiza_url_proxy("klasik"), "https://media.cms.markiza.sk/");
 }
 else if ($channel == "Nova") {
     m3u8_refer(nova_url("nova-"), "https://media.cms.nova.cz/");
