@@ -24,14 +24,23 @@ add_channel($chan_sk, "(Markiza) Dajto", "Dajto", "https://media.cms.markiza.sk/
 add_channel($chan_sk, "(Markiza) Doma", "Doma", "https://media.cms.markiza.sk/embed/doma-live?autoplay=any");
 add_channel($chan_sk, "(Markiza) Krimi", "Krimi", "https://media.cms.markiza.sk/embed/krimi-live?autoplay=any");
 add_channel($chan_sk, "(Markiza) Klasik", "Klasik", "https://media.cms.markiza.sk/embed/klasik-live?autoplay=any");
+add_channel($chan_sk, "JOJ", "JOJ", "https://live.joj.sk/");
+add_channel($chan_sk, "JOJ Plus", "JOJP", "https://plus.joj.sk/live");
+add_channel($chan_sk, "JOJ Wau", "Wau", "https://wau.joj.sk/live");
+add_channel($chan_sk, "JOJ 24", "JOJ24", "https://joj24.noviny.sk/");
+
 
 $slovakiaNote = array (
     "    <br>",
     "    <details>",
-    "        <summary>note: All Markiza channels need the Referer to be https://media.cms.markiza.sk/ !</summary>",
-    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in current VLC. Use explicit command for your favourite player:",
+    "        <summary>note: All Markiza channels need the Referer to be https://media.cms.markiza.sk/ and all Joj channels need https://media.joj.sk/!</summary>",
+    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
+    "//Markiza",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.markiza.sk/\" [URL]",
+    "//JOJ",
+    "vlc --adaptive-use-access --http-referrer=https://media.joj.sk/ [URL]",
+    "mpv --http-header-fields=\"Referer: https://media.joj.sk/\" [URL]",
     "    </details>",
     ""
 );
@@ -59,7 +68,7 @@ $czechNote = array(
     "    <br>",
     "    <details>",
     "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ !</summary>",
-    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in current VLC. Use explicit command for your favourite player:",
+    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
     "    </details>",

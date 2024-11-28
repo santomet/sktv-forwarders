@@ -169,6 +169,18 @@ else if ($channel == "Krimi") {
 else if ($channel == "Klasik") {
     m3u8_refer(markiza_url_proxy("klasik"), "https://media.cms.markiza.sk/");
 }
+else if ($channel == "JOJ") {
+    m3u8_refer("https://live.cdn.joj.sk/live/andromeda/joj-1080.m3u8", "https://media.joj.sk/");
+}
+else if ($channel == "JOJP") {
+    m3u8_refer("https://live.cdn.joj.sk/live/andromeda/plus-1080.m3u8", "https://media.joj.sk/");
+}
+else if ($channel == "Wau") {
+    m3u8_refer("https://live.cdn.joj.sk/live/andromeda/wau-1080.m3u8", "https://media.joj.sk/");
+}
+else if ($channel == "JOJ24") {
+    m3u8_refer("https://live.cdn.joj.sk/live/andromeda/joj_news-1080.m3u8", "https://media.joj.sk/");
+}
 else if ($channel == "Nova") {
     m3u8_refer(nova_url("nova-"), "https://media.cms.nova.cz/");
 }
