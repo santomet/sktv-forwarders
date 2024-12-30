@@ -125,6 +125,13 @@ function ceskatelevize($index) {
     loc(implode("https://", explode("http://", $info->playlist[0]->streamUrls->main)));
 }
 
+function prima($id) {
+    $primajson = json_decode(file_get_contents("https://api.play-backend.iprima.cz/api/v1/products/" . $id . "/play"));
+    $primaurl = $primajson->streamInfos[0]->url;
+    $primaurlhq = str_replace("lq.m3u8", "hq.m3u8", $primaurl);
+    return $primaurlhq;
+}
+
 header("Content-Type: text/plain");
 
 if (!isset($_GET["x"])) die("Channel not set! (?x=)");
@@ -225,6 +232,21 @@ else if ($channel == "CTart") {
 }
 else if ($channel == "CTsportPlus") {
     ceskatelevize(28);
+}
+else if ($channel == "Prima") {
+    loc(prima("id-p111013"));
+}
+else if ($channel == "PrimaCool") {
+    loc(prima("id-p111014"));
+}
+else if ($channel == "PrimaZoom") {
+    loc(prima("id-p111015"));
+}
+else if ($channel == "PrimaLove") {
+    loc(prima("id-p111016"));
+}
+else if ($channel == "PrimaMax") {
+    loc(prima("id-p111017"));
 }
 else {
     notfound("video_unavailable/unavailable.m3u8");
