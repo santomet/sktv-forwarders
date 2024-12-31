@@ -21,7 +21,8 @@ $allowedUrlPrefixes = [
     'https://media.cms.markiza.sk/embed/*',
     'https://www.ceskatelevize.cz/services/ivysilani/*',
     'https://www.ceskatelevize.cz/ivysilani/*',
-    'https://media.cms.nova.cz/embed/*'
+    'https://media.cms.nova.cz/embed/*',
+    'https://api.play-backend.iprima.cz/*'
     // Add more allowed URL prefixes here
 ];
 

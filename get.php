@@ -1,4 +1,10 @@
 <?php
+
+// Proxy functions
+$SKTV_PROXY_SK="https://dopi.ci/scripts/proxy.php?q=";
+$SKTV_PROXY_CZ="https://santovic-test.6f.sk/proxy/sktv-proxy.php?q=";
+$ZELVAR_CZ_LEGACY="https://proxy.zelvar.cz/subdom/proxy/index.php?hl=200&q=";
+
 function loc($x) {
     header("Location: " . $x);
     die();
@@ -16,10 +22,7 @@ function m3u8_refer($url, $referer) {
     die();
 }
 
-
-// Proxy functions
-
-function proxyserversk($url) {
+function proxyserversk_legacy($url) {
     $postdata = http_build_query(
         array(
                 'url' => $url
@@ -36,21 +39,32 @@ function proxyserversk($url) {
     return file_get_contents("https://www.proxyserver.sk/index.php", false, $context);
 }
 
-function proxydopici($url) {
-    return file_get_contents("https://dopi.ci/scripts/sktv-proxy.php?q=" . urlencode($url));
+function proxysktv_sk_simple($url) {
+    global $SKTV_PROXY_SK;
+    return file_get_contents($SKTV_PROXY_SK . urlencode($url), false);
+}
+
+function proxysktv_cz_simple($url) {
+    global $SKTV_PROXY_CZ;
+    return file_get_contents($SKTV_PROXY_CZ . urlencode($url), false);
+}
+
+function proxy_zelvar_simple($url) {
+    global $ZELVAR_CZ_LEGACY;
+    return file_get_contents($ZELVAR_CZ_LEGACY . urlencode($url), false, stream_context_create(array("ssl"=>array("verify_peer_name"=>false))));
 }
 
 // RTVS ---------------
 
 //without proxy
-function stv_url($x) {
-    return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
-}
+// function stv_url($x) {
+//     return json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
+// }
 
 //stv with proxy
 function stv_url_proxy($x) {
     $playlisturl = json_decode(file_get_contents("https://www.rtvs.sk/json/live5f.json?c=" . $x . "&b=msie&p=win&v=11&f=0&d=1"), true)["clip"]["sources"][0]["src"];
-    $playlist = proxydopici($playlisturl);
+    $playlist = proxysktv_sk_simple($playlisturl);
     $lines = explode("\n", $playlist);
     return $lines[5]; //1080p is on line 4
 }
@@ -58,7 +72,7 @@ function stv_url_proxy($x) {
 //Markiza with proxy
 function markiza_url_proxy($x) {
     $siteurl = "https://media.cms.markiza.sk/embed/" . $x . "-live?autoplay=any";
-    $sitecontent = proxydopici($siteurl);
+    $sitecontent = proxysktv_sk_simple($siteurl);
     $streamurl = join("", explode("\\", explode("\"", explode("[{\"src\":\"", $sitecontent)[1])[0]));
     return $streamurl;
 }
@@ -71,7 +85,7 @@ function nova_url($x) {
 */
 
 function nova_url($x, $tn = false) {
-    $content = file_get_contents("https://proxy.zelvar.cz/subdom/proxy/index.php?q=https%3A%2F%2Fmedia" . ($tn ? "tn" : "") . ".cms.nova.cz%2Fembed%2F" . $x . ($tn ? "" : "live") . "%3Fautoplay%3D1&hl=200", false, stream_context_create(array("ssl"=>array("verify_peer_name"=>false))));
+    $content = proxy_zelvar_simple("https://media" . ($tn ? "tn" : "") . ".cms.nova.cz/embed/" . $x . ($tn ? "" : "live") . "?autoplay=1");
     return join("", explode("\\", explode("\"", explode("[{\"src\":\"", $content)[1])[0]));
 }
 
@@ -86,9 +100,10 @@ function cnn_portugal() {
 }
 
 function ceskatelevize($index) {
+    global $SKTV_PROXY_CZ;
     $ua = "WeRead/4.1.1 WRBrand/Huawei Dalvik/2.1.0 (Linux; U; Android 7.0; EVA-L09 Build/HUAWEIEVA-L09)";
 
-    $c = curl_init("https://proxy.zelvar.cz/subdom/proxy/index.php?q=" . urlencode("https://www.ceskatelevize.cz/services/ivysilani/xml/token") . "&hl=200");
+    $c = curl_init($SKTV_PROXY_CZ . urlencode("https://www.ceskatelevize.cz/services/ivysilani/xml/token"));
     curl_setopt($c, CURLOPT_POST, true);
     curl_setopt($c, CURLOPT_POSTFIELDS, "user=iDevicesMotion");
     curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
@@ -97,7 +112,7 @@ function ceskatelevize($index) {
     $token = simplexml_load_string("<?xml" . explode("<?xml", curl_exec($c))[1])->__toString();
     curl_close($c);
 
-    $c = curl_init("https://proxy.zelvar.cz/subdom/proxy/index.php?q=" . urlencode("https://www.ceskatelevize.cz/services/ivysilani/xml/playlisturl") . "&hl=200");
+    $c = curl_init($SKTV_PROXY_CZ . urlencode("https://www.ceskatelevize.cz/services/ivysilani/xml/playlisturl"));
     curl_setopt($c, CURLOPT_POST, true);
     curl_setopt($c, CURLOPT_POSTFIELDS, http_build_query(array(
         "ID"=>("CT" . $index),
@@ -114,7 +129,7 @@ function ceskatelevize($index) {
     $_info->loadXML("<?xml" . explode("<?xml", curl_exec($c))[1]);
     curl_close($c);
 
-    $c = curl_init("https://proxy.zelvar.cz/subdom/proxy/index.php?q=" . urlencode(implode("https://", explode("http://", $_info->textContent))) . "&hl=200");
+    $c = curl_init($SKTV_PROXY_CZ . urlencode(implode("https://", explode("http://", $_info->textContent))));
     curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($c, CURLOPT_USERAGENT, $ua);
     curl_setopt($c, CURLOPT_HEADER, true);
@@ -126,7 +141,7 @@ function ceskatelevize($index) {
 }
 
 function prima($id) {
-    $primajson = json_decode(file_get_contents("https://api.play-backend.iprima.cz/api/v1/products/" . $id . "/play"));
+    $primajson = json_decode(proxysktv_cz_simple("https://api.play-backend.iprima.cz/api/v1/products/" . $id . "/play"));
     $primaurl = $primajson->streamInfos[0]->url;
     $primaurlhq = str_replace("lq.m3u8", "hq.m3u8", $primaurl);
     return $primaurlhq;

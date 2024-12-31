@@ -63,11 +63,16 @@ add_channel($chan_cz, "Nova Fun", "NovaFun", "https://tv.nova.cz/sledujte-zive/4
 add_channel($chan_cz, "Nova Gold", "NovaGold", "https://tv.nova.cz/sledujte-zive/5-nova-gold");
 add_channel($chan_cz, "Nova Lady", "NovaLady", "https://tv.nova.cz/sledujte-zive/29-nova-lady");
 add_channel($chan_cz, "TN Live", "NovaTNLive", "https://tn.nova.cz/tnlive");
+add_channel($chan_cz, "Prima", "Prima", "https://iprima.cz");
+add_channel($chan_cz, "Prima Cool", "PrimaCool", "https://iprima.cz");
+add_channel($chan_cz, "Prima Zoom", "PrimaZoom", "https://iprima.cz");
+add_channel($chan_cz, "Prima Love", "PrimaLove", "https://iprima.cz");
+add_channel($chan_cz, "Prima Max", "PrimaMax", "https://iprima.cz");
 
 $czechNote = array(
     "    <br>",
     "    <details>",
-    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ !</summary>",
+    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ ! + All Prima channels works only with Czech IP</summary>",
     "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
