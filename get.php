@@ -144,7 +144,7 @@ function prima($id) {
     global $SKTV_PROXY_CZ;
     $primajson = json_decode(proxysktv_cz_simple("https://api.play-backend.iprima.cz/api/v1/products/" . $id . "/play"));
     $primaurl = $primajson->streamInfos[0]->url;
-    $primaurlhq = str_replace("lq.m3u8", "hq.m3u8", $primaurl);
+    $primaurlhq = str_replace("lq.m3u8", "hd.m3u8", $primaurl);
     return $primaurlhq;
 }
 
