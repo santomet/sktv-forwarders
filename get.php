@@ -145,14 +145,14 @@ function prima($id) {
     $primajson = json_decode(proxysktv_cz_simple("https://api.play-backend.iprima.cz/api/v1/products/" . $id . "/play"));
     $primaurl = $primajson->streamInfos[0]->url;
     $primaurlhq = str_replace("lq.m3u8", "hq.m3u8", $primaurl);
-    $primaurl_forged = $SKTV_PROXY_CZ . urlencode($primaurlhq) . "&m3u8-forge=true";
-    return $primaurl_forged;
+    return $primaurlhq;
 }
 
 header("Content-Type: text/plain");
 
 if (!isset($_GET["x"])) die("Channel not set! (?x=)");
 $channel = $_GET["x"];
+$forge = isset($_GET['forge']) && $_GET['forge'] === 'true';
 
 if ($channel == "TA3") {
     loc(ta3_url());
@@ -251,19 +251,24 @@ else if ($channel == "CTsportPlus") {
     ceskatelevize(28);
 }
 else if ($channel == "Prima") {
-    loc(prima("id-p111013"));
+    if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111013")) . "&m3u8-forge=true");
+    else loc(prima("id-p111013"));
 }
 else if ($channel == "PrimaCool") {
-    loc(prima("id-p111014"));
+    if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111014")) . "&m3u8-forge=true");
+    else loc(prima("id-p111014"));
 }
 else if ($channel == "PrimaZoom") {
-    loc(prima("id-p111015"));
+    if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111015")) . "&m3u8-forge=true");
+    else loc(prima("id-p111015"));
 }
 else if ($channel == "PrimaLove") {
-    loc(prima("id-p111016"));
+    if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111016")) . "&m3u8-forge=true");
+    else loc(prima("id-p111016"));
 }
 else if ($channel == "PrimaMax") {
-    loc(prima("id-p111017"));
+    if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111017")) . "&m3u8-forge=true");
+    else loc(prima("id-p111017"));
 }
 else {
     notfound("video_unavailable/unavailable.m3u8");

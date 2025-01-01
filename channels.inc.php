@@ -72,7 +72,7 @@ add_channel($chan_cz, "Prima Max", "PrimaMax", "https://iprima.cz");
 $czechNote = array(
     "    <br>",
     "    <details>",
-    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ !</summary>",
+    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ ! All Prima channels need czech IP! </summary>",
     "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
