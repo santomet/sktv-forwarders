@@ -2,7 +2,7 @@
 
 // Proxy functions
 $SKTV_PROXY_SK="https://dopi.ci/scripts/proxy.php?q=";
-$SKTV_PROXY_CZ="https://santovic-test.6f.sk/proxy/sktv-proxy.php?q=";
+$SKTV_PROXY_CZ="https://santovic-test.6f.sk/sktv-proxy.php?q=";
 $ZELVAR_CZ_LEGACY="https://proxy.zelvar.cz/subdom/proxy/index.php?hl=200&q=";
 
 function loc($x) {
@@ -141,10 +141,12 @@ function ceskatelevize($index) {
 }
 
 function prima($id) {
+    global $SKTV_PROXY_CZ;
     $primajson = json_decode(proxysktv_cz_simple("https://api.play-backend.iprima.cz/api/v1/products/" . $id . "/play"));
     $primaurl = $primajson->streamInfos[0]->url;
     $primaurlhq = str_replace("lq.m3u8", "hq.m3u8", $primaurl);
-    return $primaurlhq;
+    $primaurl_forged = $SKTV_PROXY_CZ . urlencode($primaurlhq) . "&m3u8-forge=true";
+    return $primaurl_forged;
 }
 
 header("Content-Type: text/plain");
