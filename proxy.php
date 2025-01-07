@@ -138,17 +138,13 @@ if ($isAllowed) {
     }
 
 $filename = null;
-$headersSent = false;
 foreach (explode("\r\n", $responseHeaders) as $header) {
-    if (!$headersSent && stripos($header, 'HTTP/') === 0) {
-        header($header);
-        $headersSent = true;
-    } elseif (stripos($header, 'Content-Disposition:') === 0) {
+     if (stripos($header, 'Content-Disposition:') === 0) {
         // Extract filename from Content-Disposition header
         if (preg_match('/filename[^;=\n]*=([\'\"]*)([^\"\';]*)/i', $header, $matches)) {
             $filename = $matches[2];
         }
-    } elseif ($header && stripos($header, 'Transfer-Encoding:') === false && stripos($header, 'Content-Encoding:') === false) {
+    } elseif ($header && stripos($header, 'Transfer-Encoding:') === false && stripos($header, 'Content-Encoding:') === false && stripos($header, 'HTTP/') === false) {
         header($header);
     }
 }
