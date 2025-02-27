@@ -229,26 +229,34 @@ else if ($channel == "NovaTNLive") {
 else if ($channel == "CNN_Portugal") {
     loc(cnn_portugal());
 }
+    /*
+    The links below are mine, hosted in germany where it magically works even tho i thought it will not lol
+    Only ČT1, ČT2, ČT24, ČT Sport, ČT art and ČT Sport Plus works, ČT D throws error that it can only be watched with DRM.
+    Can send python code to host it yourself, or to check how it works :)
+
+    
+    -mxnticek / vlastikyoutubeko
+    */
 else if ($channel == "CT1") {
-    ceskatelevize(1);
+    loc("http://38.242.156.120:5090/stream/CH_1");
 }
 else if ($channel == "CT2") {
-    ceskatelevize(2);
+    loc("http://38.242.156.120:5090/stream/CH_2");
 }
 else if ($channel == "CT24") {
-    ceskatelevize(3);
+    loc("http://38.242.156.120:5090/stream/CH_24");
 }
 else if ($channel == "CTsport") {
-    ceskatelevize(4);
+    loc("http://38.242.156.120:5090/stream/CH_4");
 }
 else if ($channel == "CT_D") {
     ceskatelevize(5);
 }
 else if ($channel == "CTart") {
-    ceskatelevize(6);
+    loc("http://38.242.156.120:5090/stream/CH_6");
 }
 else if ($channel == "CTsportPlus") {
-    ceskatelevize(28);
+    loc("http://38.242.156.120:5090/stream/CH_26");
 }
 else if ($channel == "Prima") {
     if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111013")) . "&m3u8-forge=true");
