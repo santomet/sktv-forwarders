@@ -99,6 +99,7 @@ function cnn_portugal() {
     return $endpoint["videoUrl"] . "wmsAuthSign=" . file_get_contents("https://services.iol.pt/matrix?userId=", false, stream_context_create(array("http"=>array("header"=>"User-Agent: Mozilla/5.0 (Linux; Android 8.1.0; SM-A260F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Mobile Safari/537.36\r\n"))));
 }
 
+/*
 function ceskatelevize($index) {
     global $SKTV_PROXY_CZ;
     $ua = "WeRead/4.1.1 WRBrand/Huawei Dalvik/2.1.0 (Linux; U; Android 7.0; EVA-L09 Build/HUAWEIEVA-L09)";
@@ -138,6 +139,65 @@ function ceskatelevize($index) {
     $a[0] = "";
     $info = json_decode(implode("{", $a));
     loc(implode("https://", explode("http://", $info->playlist[0]->streamUrls->main)));
+}
+*/
+
+function ceskatelevize($index) {
+    // Channel mapping
+    $channel_map = array(
+        "1" => "CH_1",    // ČT1
+        "2" => "CH_2",    // ČT2
+        "4" => "CH_4",    // ČT Sport
+        "5" => "CH_5",    // ČT :D
+        "6" => "CH_6",    // ČT Art
+        "7" => "CH_7",    // ČT3
+        "24" => "CH_24",  // ČT24
+        "26" => "CH_26"   // CT Sport Plus
+        // you can add more ofc, more info about channels in vlastikyoutubeko/ct_stream
+    );
+
+    if (!isset($channel_map[$index])) {
+        notfound("video_unavailable/unavailable.m3u8");
+        return;
+    }
+
+    $channel = $channel_map[$index];
+    
+    // Get the stream data with HLS format and force 1080p quality
+    $api_url = "https://api.ceskatelevize.cz/video/v1/playlist-live/v1/stream-data/channel/" . $channel . "?canPlayDrm=false&streamType=ts&quality=1080p";
+    
+    $c = curl_init();
+    curl_setopt($c, CURLOPT_URL, $api_url);
+    curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($c, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($c, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
+    curl_setopt($c, CURLOPT_TIMEOUT, 10);
+    curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($c, CURLOPT_BUFFERSIZE, 64 * 1024);
+    curl_setopt($c, CURLOPT_TCP_FASTOPEN, true);
+    curl_setopt($c, CURLOPT_TCP_NODELAY, true);
+    curl_setopt($c, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+    
+    $response = curl_exec($c);
+    $http_code = curl_getinfo($c, CURLINFO_HTTP_CODE);
+    curl_close($c);
+    
+    if ($http_code !== 200 || !$response) {
+        notfound("video_unavailable/unavailable.m3u8");
+        return;
+    }
+    
+    $data = json_decode($response, true);
+    if (!$data || !isset($data['streamUrls']['main'])) {
+        notfound("video_unavailable/unavailable.m3u8");
+        return;
+    }
+    
+    // Get the stream URL and use m3u8_refer with VLC options
+    $stream_url = $data['streamUrls']['main'];
+    m3u8_refer($stream_url, "https://www.ceskatelevize.cz/");
 }
 
 function prima($id) {
@@ -230,33 +290,31 @@ else if ($channel == "CNN_Portugal") {
     loc(cnn_portugal());
 }
     /*
-    The links below are mine, hosted in germany where it magically works even tho i thought it will not lol
-    Only ČT1, ČT2, ČT24, ČT Sport, ČT art and ČT Sport Plus works, ČT D throws error that it can only be watched with DRM.
-    Can send python code to host it yourself, or to check how it works :)
-
-    
+     I have replaced links with a new function. It should work as expected, but will not be able to watch all channels, like CT_D since it required DRM.
+     If it didn't, I would have included it. 
     -mxnticek / vlastikyoutubeko
     */
 else if ($channel == "CT1") {
-    loc("http://38.242.156.120:5090/stream/CH_1");
+    ceskatelevize("1");
 }
 else if ($channel == "CT2") {
-    loc("http://38.242.156.120:5090/stream/CH_2");
+    ceskatelevize("2");
 }
 else if ($channel == "CT24") {
-    loc("http://38.242.156.120:5090/stream/CH_24");
+    ceskatelevize("24");
 }
 else if ($channel == "CTsport") {
-    loc("http://38.242.156.120:5090/stream/CH_4");
+    ceskatelevize("4");
 }
 else if ($channel == "CT_D") {
-    ceskatelevize(5);
+    //ceskatelevize("5");
+    notfound("video_unavailable/unavailable.m3u8");
 }
 else if ($channel == "CTart") {
-    loc("http://38.242.156.120:5090/stream/CH_6");
+    ceskatelevize("6");
 }
 else if ($channel == "CTsportPlus") {
-    loc("http://38.242.156.120:5090/stream/CH_26");
+    ceskatelevize("26");
 }
 else if ($channel == "Prima") {
     if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111013")) . "&m3u8-forge=true");
