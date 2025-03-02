@@ -100,7 +100,7 @@ function cnn_portugal() {
 }
 
 function ceskatelevize($code) {
-    $url = "https://api.ceskatelevize.cz/video/v1/playlist-live/v1/stream-data/channel/" . $code . "?canPlayDrm=false&streamType=dash";
+    $url = "https://api.ceskatelevize.cz/video/v1/playlist-live/v1/stream-data/channel/" . $code . "?canPlayDrm=false&streamType=dash&quality=1080p";
     $response = proxysktv_cz_simple($url);
     $manifest = json_decode($response, true);
     $finalurl = $manifest["streamUrls"]["main"];
