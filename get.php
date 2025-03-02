@@ -99,45 +99,12 @@ function cnn_portugal() {
     return $endpoint["videoUrl"] . "wmsAuthSign=" . file_get_contents("https://services.iol.pt/matrix?userId=", false, stream_context_create(array("http"=>array("header"=>"User-Agent: Mozilla/5.0 (Linux; Android 8.1.0; SM-A260F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Mobile Safari/537.36\r\n"))));
 }
 
-function ceskatelevize($index) {
-    global $SKTV_PROXY_CZ;
-    $ua = "WeRead/4.1.1 WRBrand/Huawei Dalvik/2.1.0 (Linux; U; Android 7.0; EVA-L09 Build/HUAWEIEVA-L09)";
-
-    $c = curl_init($SKTV_PROXY_CZ . urlencode("https://www.ceskatelevize.cz/services/ivysilani/xml/token"));
-    curl_setopt($c, CURLOPT_POST, true);
-    curl_setopt($c, CURLOPT_POSTFIELDS, "user=iDevicesMotion");
-    curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($c, CURLOPT_USERAGENT, $ua);
-    curl_setopt($c, CURLOPT_SSL_VERIFYHOST, false);
-    $token = simplexml_load_string("<?xml" . explode("<?xml", curl_exec($c))[1])->__toString();
-    curl_close($c);
-
-    $c = curl_init($SKTV_PROXY_CZ . urlencode("https://www.ceskatelevize.cz/services/ivysilani/xml/playlisturl"));
-    curl_setopt($c, CURLOPT_POST, true);
-    curl_setopt($c, CURLOPT_POSTFIELDS, http_build_query(array(
-        "ID"=>("CT" . $index),
-        "playerType"=>"iPad",
-        "quality"=>"1080p",
-        "playlistType"=>"json",
-        "canPlayDrm"=>"false",
-        "token"=>$token
-    )));
-    curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($c, CURLOPT_USERAGENT, $ua);
-    curl_setopt($c, CURLOPT_SSL_VERIFYHOST, false);
-    $_info = new DOMDocument();
-    $_info->loadXML("<?xml" . explode("<?xml", curl_exec($c))[1]);
-    curl_close($c);
-
-    $c = curl_init($SKTV_PROXY_CZ . urlencode(implode("https://", explode("http://", $_info->textContent))));
-    curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($c, CURLOPT_USERAGENT, $ua);
-    curl_setopt($c, CURLOPT_HEADER, true);
-    curl_setopt($c, CURLOPT_SSL_VERIFYHOST, false);
-    $a = explode("{", curl_exec($c));
-    $a[0] = "";
-    $info = json_decode(implode("{", $a));
-    loc(implode("https://", explode("http://", $info->playlist[0]->streamUrls->main)));
+function ceskatelevize($code) {
+    $url = "https://api.ceskatelevize.cz/video/v1/playlist-live/v1/stream-data/channel/" . $code . "?canPlayDrm=false&streamType=dash&quality=1080p";
+    $response = proxysktv_cz_simple($url);
+    $manifest = json_decode($response, true);
+    $finalurl = $manifest["streamUrls"]["main"];
+    return $finalurl;
 }
 
 function prima($id) {
@@ -230,25 +197,25 @@ else if ($channel == "CNN_Portugal") {
     loc(cnn_portugal());
 }
 else if ($channel == "CT1") {
-    ceskatelevize(1);
+    loc(ceskatelevize("CH_1"));
 }
 else if ($channel == "CT2") {
-    ceskatelevize(2);
+    loc(ceskatelevize("CH_2"));
 }
 else if ($channel == "CT24") {
-    ceskatelevize(3);
+    loc(ceskatelevize("CH_24"));
 }
 else if ($channel == "CTsport") {
-    ceskatelevize(4);
+    loc(ceskatelevize("CH_4"));
 }
 else if ($channel == "CT_D") {
-    ceskatelevize(5);
+    loc(ceskatelevize("CH_5"));
 }
 else if ($channel == "CTart") {
-    ceskatelevize(6);
+    loc(ceskatelevize("CH_6"));
 }
 else if ($channel == "CTsportPlus") {
-    ceskatelevize(28);
+    loc(ceskatelevize("CH_25"));
 }
 else if ($channel == "Prima") {
     if($forge) loc($SKTV_PROXY_CZ . urlencode(prima("id-p111013")) . "&m3u8-forge=true");
