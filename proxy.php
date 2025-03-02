@@ -51,7 +51,8 @@ $allowedUrlPrefixes = [
     'https://media.cms.nova.cz/embed/*',
     'https://api.play-backend.iprima.cz/*',
     'http://prima-ott-live-sec.ssl.cdn.cra.cz/*',
-    'https://prima-ott-live-sec.ssl.cdn.cra.cz/*'
+    'https://prima-ott-live-sec.ssl.cdn.cra.cz/*',
+    'https://api.ceskatelevize.cz/*'
 ];
 
 $alwaysProxiedUrls = [
