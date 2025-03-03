@@ -1,7 +1,7 @@
 <?php
 
 // Proxy functions
-$SKTV_PROXY_SK="https://dopi.ci/scripts/proxy.php?q=";
+$SKTV_PROXY_SK="https://sktv-poprad.dopi.ci/proxy.php?q=";
 $SKTV_PROXY_CZ="https://santovic-test.6f.sk/sktv-proxy.php?q=";
 $ZELVAR_CZ_LEGACY="https://proxy.zelvar.cz/subdom/proxy/index.php?hl=200&q=";
 
