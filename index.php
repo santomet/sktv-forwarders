@@ -55,7 +55,7 @@
         <?php
         }
         ?>
-        <p class="text-center mt-8">&copy; <?php echo date("Y"); ?> Created originally by <a href="https://github.com/NezbednikSK" class="text-blue-500 underline">nezbednik</a>, now maintained by <a href="https://santomet.eu">santomet</a> (And redesigned by <a href="https://odjezdy.online" class="text-blue-500 underline">mxnticek</a> using <a href="https://screenshottocode.com/" class="text-blue-500 underline bold">Screenshot To Code</a>)</p>
+        <p class="text-center mt-8">&copy; <?php echo date("Y"); ?> Created originally by an author who doesn't want to be disclosed, now maintained by <a href="https://santomet.eu">santomet</a> (And redesigned by <a href="https://odjezdy.online" class="text-blue-500 underline">mxnticek</a> using <a href="https://screenshottocode.com/" class="text-blue-500 underline bold">Screenshot To Code</a>)</p>
         <p class="text-center mt-8"> Disclaimer: This project is an open-source initiative provided for educational purposes only. The software and scripts contained herein are intended to be used exclusively by individuals who have legitimate access to the resources, such as by completing any required registrations or residing in regions where access is permitted by the content provider </p>
     </div>
 </body>

@@ -1,12 +1,14 @@
 # SKTV-Forwarders
 
-The original work done by NezbednikSK has been brought down by the 7m.pl hosting. 
+The original work has been brought down by the 7m.pl hosting. (Original author doesn't want to be disclosed) 
 The code has been lost but luckily fraudiay79 did save it so we can continue the work on this project.
 
 # Disclaimer
 This project is an open-source initiative provided for educational purposes only. The software and scripts contained herein are intended to be used exclusively by individuals who have legitimate access to the resources, such as by completing any required registrations or residing in regions where access is permitted by the content provider.
 
 By using this software, you agree to comply with all applicable laws and regulations and acknowledge that you are responsible for your actions.
+
+The demo hosted on by the author of this project is intended for demonstrative purposes and it is prohibited to use that or the underlying infrastructure for creating illegal IPTV lists.
 
 ### Educational Use:
 This project is designed to demonstrate technical concepts and provide educational value about IPTV streaming. It is not intended for commercial use or distribution.
