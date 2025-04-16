@@ -1,8 +1,8 @@
 <?php
 
-// Proxy functions
-$SKTV_PROXY_SK="https://dopi.ci/scripts/proxy.php?q=";
-$SKTV_PROXY_CZ="https://santovic-test.6f.sk/sktv-proxy.php?q=";
+// Proxy paths
+$SKTV_PROXY_SK="${SECRET_SKTV_PROXY_SK}";
+$SKTV_PROXY_CZ="${SECRET_SKTV_PROXY_CZ}";
 $ZELVAR_CZ_LEGACY="https://proxy.zelvar.cz/subdom/proxy/index.php?hl=200&q=";
 
 function loc($x) {

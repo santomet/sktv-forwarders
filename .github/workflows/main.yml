@@ -1,4 +1,5 @@
 name: 🚀 Deploy
+
 on:
   push:
     branches: [ master ]
@@ -6,9 +7,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
-      # Here is the deployment action
+
+      # Change envs
+      - name: Replace secrets in files
+        run: |
+          # Create temp files with replacements
+          cat get.php | envsubst > get.php.temp
+          mv get.php.temp get.php
+        env:
+          SECRET_SKTV_PROXY_SK: ${{ secrets.SECRET_SKTV_PROXY_SK }}
+          SECRET_SKTV_PROXY_CZ: ${{ secrets.SECRET_SKTV_PROXY_CZ }}
+
+      # Deploy
       - name: Upload from output to a remote server via FTP
         uses: modern-dev/ftp-mirror@v2
         with:
@@ -19,3 +32,4 @@ jobs:
           remote_dir: ${{ secrets.FTP_REMOTEDIR }}
           delete: "false"
           exclude: ".git/ .github/ video_unavailable/generate_videos.sh video_unavailable/unavailable.psd video_unavailable/unavailable.png"
+

@@ -1,4 +1,8 @@
 <?php
+
+//This script is being used as a proxy script for sktv-forwarders project. You should host it yourself within your infrastructure if you want to use it.
+//In get.php file you just replace SKTV_PROXY_SK or SKTV_PROXY_CZ with the url like this: "https://example.com/proxy.php?q="
+
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
 
