@@ -15,7 +15,7 @@ jobs:
       - name: Replace secrets in files
         run: |
           # Create temp files with replacements
-          cat get.php | envsubst > get.php.temp
+          envsubst '${SECRET_SKTV_PROXY_SK} ${SECRET_SKTV_PROXY_CZ}' < get.php > get.php.temp
           mv get.php.temp get.php
         env:
           SECRET_SKTV_PROXY_SK: ${{ secrets.SECRET_SKTV_PROXY_SK }}
