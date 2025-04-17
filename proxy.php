@@ -149,7 +149,7 @@ foreach (explode("\r\n", $responseHeaders) as $header) {
         if (preg_match('/filename[^;=\n]*=([\'\"]*)([^\"\';]*)/i', $header, $matches)) {
             $filename = $matches[2];
         }
-    } elseif ($header && stripos($header, 'Transfer-Encoding:') === false && stripos($header, 'Content-Encoding:') === false && stripos($header, 'HTTP/') === false) {
+    } elseif ($header && stripos($header, 'Transfer-Encoding:') === false && stripos($header, 'Content-Encoding:') === false && stripos($header, 'HTTP/') === false && stripos($header, 'Content-Length:') === false) {
         header($header);
     }
 }
