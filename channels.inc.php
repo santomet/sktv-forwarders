@@ -76,6 +76,7 @@ $czechNote = array(
     "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
+    "// Prima channels need czech IP or &forge=true added to the url. This doesn't work on some players.",
     "    </details>",
 );
 
