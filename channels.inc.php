@@ -29,14 +29,15 @@ add_channel($chan_sk, "JOJ", "JOJ", "https://live.joj.sk/");
 add_channel($chan_sk, "JOJ Plus", "JOJP", "https://plus.joj.sk/live");
 add_channel($chan_sk, "(JOJ) Wau", "Wau", "https://wau.joj.sk/live");
 add_channel($chan_sk, "JOJ 24", "JOJ24", "https://joj24.noviny.sk/");
-add_channel($chan_sk, "JOJ Šport", "JOJSport", "https://jojsport.joj.sk");
+add_channel($chan_sk, "JOJ Šport 2", "JOJSport2", "https://www.joj.sk/live/180-jojsport2");
 add_channel($chan_sk, "Jojko", "Jojko", "https://jojko.joj.sk");
 
 $slovakiaNote = array (
     "    <br>",
     "    <details>",
     "        <summary>note: All Markiza channels need the Referer to be https://media.cms.markiza.sk/ and all Joj channels need https://media.joj.sk/!</summary>",
-    "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
+    "        <pre style=\"background-color: gainsboro;\">//JOJ Šport no longer has a free public stream; JOJ Šport 2 is listed instead.",
+    "//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
     "//Markiza",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.markiza.sk/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.markiza.sk/\" [URL]",
@@ -87,11 +88,11 @@ add_channel($chan_cz, "CNN Prima News", "PrimaNews", "https://cnn.iprima.cz/vysi
 $czechNote = array(
     "    <br>",
     "    <details>",
-    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ ! All Prima channels need czech IP! </summary>",
+    "        <summary>note: All Nova channels (Excluding TN Live) need the Referer to be https://media.cms.nova.cz/ ! Nova and Prima channels need a Czech IP! </summary>",
     "        <pre style=\"background-color: gainsboro;\">//The #EXTVLCOPT is already present in the m3u8, however, it does not work properly in some versions of VLC. Use explicit command for your favourite player:",
     "vlc --adaptive-use-access --http-referrer=https://media.cms.nova.cz/ [URL]",
     "mpv --http-header-fields=\"Referer: https://media.cms.nova.cz/\" [URL]",
-    "// Prima channels need czech IP or &forge=true added to the url. This doesn't work on some players.",
+    "// Nova and Prima need a Czech IP. Add &forge=true to route the stream through the CZ proxy (which must be hosted in CZ).",
     "    </details>",
 );
 

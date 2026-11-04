@@ -1,3 +1,20 @@
 You need to host the proxy scripts and change the URLs in the first few lines of get.php
 
+Proxy requirements:
+- Both get.php and proxy.php require the PHP curl extension (allow_url_fopen
+  is no longer used).
+- SKTV_PROXY_SK should be hosted in Slovakia (RTVS, Markiza and JOJ sources).
+- SKTV_PROXY_CZ should be hosted in the Czech Republic. Nova and Prima check the
+  client IP; a proxy hosted in Germany gets PLAY_GEOIP_DENIED / "This video is
+  not available in your country". The proxy has to really be in CZ.
+- Both proxies must run the proxy.php from this repository. On PHP 8.5 the old
+  curl_close() call emits a deprecation warning before the headers, which
+  corrupts every playlist that goes through the proxy.
+- The updated proxy supports &proxy-segments=true, which rewrites media
+  segments as well as playlists. Use &forge=true on Nova/Prima URLs to make a
+  CZ-hosted proxy serve the whole stream to clients outside CZ.
+- The old proxy.zelvar.cz service is broken on PHP 8 and is no longer used.
+
 Using the infrastructure here for anything else than testing is strictly prohibited. Especially when it comes to various illegal streaming lists.
+$SKTV_PROXY_SK="https://dopi.ci/scripts/sktv-proxy-supersecret-name-123.php?q=";
+$SKTV_PROXY_CZ="https://santovic-test.6f.sk/sktv-proxy-supersecret-name-123.php?q=";
